@@ -45,6 +45,10 @@ def inc_value(arr, pos, value):
 
 def simple_mult(a, b, size=64):
     a_arr, b_arr = int_to_array(a, size), int_to_array(b, size)
+    return array_to_int(simple_mult_as_arrays(a_arr, b_arr, size))
+
+
+def simple_mult_as_arrays(a_arr, b_arr, size=64):
     result = numpy.zeros(len(a_arr) + len(b_arr), dtype=int)
     for a_pos, a_item in enumerate(a_arr):
         for b_pos, b_item in enumerate(b_arr):
@@ -52,8 +56,7 @@ def simple_mult(a, b, size=64):
             value = mult(a_item, b_item)
 
             inc_value(result, pos, value)
-
-    return array_to_int(result)
+    return result
 
 
 def karatsuba_mult(value1, from1, to1, value2, from2, to2):
