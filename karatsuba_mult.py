@@ -39,6 +39,12 @@ def karatsuba_mult(value1, from1, to1, value2, from2, to2):
         c = value2[from1]
         d = value2[to1]
 
+        step1 = mult(a, c)
+        step2 = mult(b, d)
+        step3 = (a + b) * (c + d)
+        step4 = step3 - step2 - step1
+        
+
 
 def main():
     arr1 = int_to_array(123)
