@@ -83,11 +83,17 @@ def karatsuba_mult(value1, from1, to1, value2, from2, to2):
 
 
 def main():
-    p = TickProfiler()
 
-    simple_mult(123456, 82340234, size=32, profiler=p)
+    for i in range(1, 6):
+        size = 2 ** i
 
-    print('Profile data: {} ticks'.format(p.get_ticks()))
+        p = TickProfiler()
+
+        a = int(size * '2')
+        b = int(size * '7')
+
+        simple_mult(a, b, profiler=p, size=size)
+        print('Size {}: {} ticks'.format(size, p.get_ticks()))
 
 
 if __name__ == '__main__':
