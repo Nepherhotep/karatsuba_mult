@@ -1,5 +1,7 @@
 import numpy
 
+from tools import TickProfiler
+
 
 def int_to_array(value, size=64):
     """
@@ -26,13 +28,17 @@ def array_to_int(value):
     return int(result)
 
 
-def mult(a, b):
+def mult(a, b, profiler=None):
     assert a < 10
     assert b < 10
+
+    if profiler:
+        profiler.tick()
+
     return a * b
 
 
-def inc_value(arr, pos, value):
+def inc_value(arr, pos, value, profiler=None):
     if value:
         value += arr[pos]
 
@@ -40,22 +46,26 @@ def inc_value(arr, pos, value):
         rem = value % 10
 
         arr[pos] = rem
+
+        if profiler:
+            profiler.tick()
+
         inc_value(arr, pos + 1, mod)
 
 
-def simple_mult(a, b, size=64):
+def simple_mult(a, b, size=64, profiler=None):
     a_arr, b_arr = int_to_array(a, size), int_to_array(b, size)
-    return array_to_int(simple_mult_as_arrays(a_arr, b_arr, size))
+    return array_to_int(simple_mult_as_arrays(a_arr, b_arr, profiler))
 
 
-def simple_mult_as_arrays(a_arr, b_arr, size=64):
+def simple_mult_as_arrays(a_arr, b_arr, profiler=None):
     result = numpy.zeros(len(a_arr) + len(b_arr), dtype=int)
     for a_pos, a_item in enumerate(a_arr):
         for b_pos, b_item in enumerate(b_arr):
             pos = a_pos + b_pos
-            value = mult(a_item, b_item)
+            value = mult(a_item, b_item, profiler)
 
-            inc_value(result, pos, value)
+            inc_value(result, pos, value, profiler)
     return result
 
 
@@ -70,14 +80,14 @@ def karatsuba_mult(value1, from1, to1, value2, from2, to2):
         step2 = mult(b, d)
         step3 = (a + b) * (c + d)
         step4 = step3 - step2 - step1
-        
 
 
 def main():
-    arr1 = int_to_array(123)
-    arr2 = int_to_array(3335)
-    print(arr1)
-    print(arr2)
+    p = TickProfiler()
+
+    simple_mult(123456, 82340234, size=32, profiler=p)
+
+    print('Profile data: {} ticks'.format(p.get_ticks()))
 
 
 if __name__ == '__main__':
