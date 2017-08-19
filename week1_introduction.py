@@ -31,18 +31,18 @@ def inc_value(arr, pos, value, profiler=None):
 
 def simple_mult(a, b, size=64, profiler=None):
     a_arr, b_arr = int_to_array(a, size), int_to_array(b, size)
-    return array_to_int(simple_mult_as_arrays(a_arr, b_arr, profiler))
+    result_arr = numpy.zeros(len(a_arr) + len(b_arr), dtype=int)
+    return array_to_int(simple_mult_as_arrays(a_arr, b_arr, result_arr, profiler))
 
 
-def simple_mult_as_arrays(a_arr, b_arr, profiler=None):
-    result = numpy.zeros(len(a_arr) + len(b_arr), dtype=int)
+def simple_mult_as_arrays(a_arr, b_arr, result_arr, profiler=None):
     for a_pos, a_item in enumerate(a_arr):
         for b_pos, b_item in enumerate(b_arr):
             pos = a_pos + b_pos
             value = mult(a_item, b_item, profiler)
 
-            inc_value(result, pos, value, profiler)
-    return result
+            inc_value(result_arr, pos, value, profiler)
+    return result_arr
 
 
 def karatsuba_mult(value1, from1, to1, value2, from2, to2):
