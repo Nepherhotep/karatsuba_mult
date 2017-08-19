@@ -8,7 +8,7 @@ def mult(a, b, profiler=None):
     assert b < 10
 
     if profiler:
-        profiler.tick()
+        profiler.tick('mult')
 
     return a * b
 
@@ -23,7 +23,7 @@ def inc_value(arr, pos, value, profiler=None):
         arr[pos] = rem
 
         if profiler:
-            profiler.tick()
+            profiler.tick('inc')
 
         inc_value(arr, pos + 1, mod)
 
@@ -59,16 +59,15 @@ def karatsuba_mult(value1, from1, to1, value2, from2, to2):
 
 def main():
 
-    for i in range(1, 6):
-        size = 2 ** i
+    sets = [(7, 3, 1), (99, 33, 2), (7345, 9874, 4), (93453467, 37371945, 8),
+            (8375927401934756, 2045893729375012, 16)]
+
+    for a, b, size in sets:
 
         p = TickProfiler()
 
-        a = int(size * '2')
-        b = int(size * '7')
-
         simple_mult(a, b, profiler=p, size=size)
-        print('Size {}: {} ticks'.format(size, p.get_ticks()))
+        print('Size {}: mult {}, inc {} ticks'.format(size, p.get_ticks('mult'), p.get_ticks('inc')))
 
 
 if __name__ == '__main__':

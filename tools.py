@@ -3,13 +3,13 @@ import numpy
 
 class TickProfiler:
     def __init__(self):
-        self.count = 0
+        self.buckets = {}
 
-    def tick(self):
-        self.count += 1
+    def tick(self, bucket_name='default'):
+        self.buckets[bucket_name] = self.get_ticks(bucket_name) + 1
 
-    def get_ticks(self):
-        return self.count
+    def get_ticks(self, bucket_name='default'):
+        return self.buckets.get(bucket_name, 0)
 
 
 def int_to_array(value, size=64):
