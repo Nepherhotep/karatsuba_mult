@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import numpy as np
 
-from karatsuba_mult import int_to_array, array_to_int, simple_mult
+from week1_introduction import int_to_array, array_to_int, simple_mult
 
 
 class IntToArrayTest(TestCase):
