@@ -1,31 +1,6 @@
 import numpy
 
-from tools import TickProfiler
-
-
-def int_to_array(value, size=64):
-    """
-    Convert integer into little-endian array
-    :param value: integer
-    :param size: length of array (should be power of 2)
-    :return: array
-    """
-    arr = numpy.zeros(size, dtype=int)
-    for i, c in enumerate(str(value)[::-1]):
-        arr[i] = int(c)
-    return arr
-
-
-def array_to_int(value):
-    """
-    Convert little-endian array into integer
-    :param value: array
-    :return: int
-    """
-    result = ''.join(map(str, value))
-    result = result[::-1]
-    result = result.lstrip('0')
-    return int(result)
+from tools import TickProfiler, int_to_array, array_to_int
 
 
 def mult(a, b, profiler=None):

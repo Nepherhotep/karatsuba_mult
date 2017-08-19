@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import numpy as np
 
-from week1_introduction import int_to_array, array_to_int, simple_mult
+from tools import int_to_array, array_to_int
 
 
 class IntToArrayTest(TestCase):
@@ -25,17 +25,3 @@ class IntToArrayTest(TestCase):
         value = array_to_int(np.array([0, 4, 3, 2, 1, 0, 0, 0, 0]))
 
         assert value == 12340, value
-
-
-class TestMult(TestCase):
-    def test_simple_mult(self):
-        a, b = 123, 357
-
-        result = simple_mult(a, b, size=4)
-        assert result == a * b, result
-
-    def test_simle_mult2(self):
-        a, b = 77771232346123, 832409801237
-
-        result = simple_mult(a, b)
-        assert result == a * b, result
