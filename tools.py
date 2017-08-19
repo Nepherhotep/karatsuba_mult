@@ -11,6 +11,9 @@ class TickProfiler:
     def get_ticks(self, bucket_name='default'):
         return self.buckets.get(bucket_name, 0)
 
+    def get_total(self):
+        return sum(self.buckets.values())
+
 
 def int_to_array(value, size=64):
     """

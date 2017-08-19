@@ -1,4 +1,5 @@
 import numpy
+import matplotlib.pyplot as plt
 
 from tools import TickProfiler, int_to_array, array_to_int
 
@@ -59,16 +60,21 @@ def karatsuba_mult(value1, from1, to1, value2, from2, to2):
 
 def main():
 
-    sets = [(7, 3, 1), (99, 33, 2), (7345, 9874, 4), (93453467, 37371945, 8),
-            (8375927401934756, 2045893729375012, 16)]
-
-    for a, b, size in sets:
+    sizes = range(2, 30)
+    totals = []
+    for size in sizes:
+        a = int(size * '5')
+        b = int(size * '8')
 
         p = TickProfiler()
 
         simple_mult(a, b, profiler=p, size=size)
-        print('Size {}: mult {}, inc {} ticks'.format(size, p.get_ticks('mult'), p.get_ticks('inc')))
 
+        totals.append(p.get_total())
+        print('Size {}: {} total ticks'.format(size, p.get_total()))
+
+    plt.plot(sizes, totals)
+    plt.show()
 
 if __name__ == '__main__':
     main()
