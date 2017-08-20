@@ -35,10 +35,10 @@ def simple_mult(a, b, size=64, profiler=None):
     return array_to_int(simple_mult_as_arrays(a_arr, b_arr, result_arr, profiler))
 
 
-def simple_mult_as_arrays(a_arr, b_arr, result_arr, profiler=None):
+def simple_mult_as_arrays(a_arr, b_arr, result_arr, a_slice=None, b_slice=None, result_offset=0, profiler=None):
     for a_pos, a_item in enumerate(a_arr):
         for b_pos, b_item in enumerate(b_arr):
-            pos = a_pos + b_pos
+            pos = result_offset + a_pos + b_pos
             value = mult(a_item, b_item, profiler)
 
             inc_value(result_arr, pos, value, profiler)
