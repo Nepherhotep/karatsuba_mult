@@ -36,13 +36,26 @@ def simple_mult(a, b, size=64, profiler=None):
 
 
 def simple_mult_as_arrays(a_arr, b_arr, result_arr, a_slice=None, b_slice=None, result_offset=0, profiler=None):
-    for a_pos, a_item in enumerate(a_arr):
-        for b_pos, b_item in enumerate(b_arr):
-            pos = result_offset + a_pos + b_pos
+    a_from, a_to = unpack_slice(a_arr, a_slice)
+    b_from, b_to = unpack_slice(b_arr, b_slice)
+
+    for a_pos in range(a_from, a_to):
+        for b_pos in range(b_from, b_to):
+            a_item = a_arr[a_pos]
+            b_item = b_arr[b_pos]
+            pos = result_offset + a_pos + b_pos - a_from - b_from
             value = mult(a_item, b_item, profiler)
 
             inc_value(result_arr, pos, value, profiler)
     return result_arr
+
+
+def unpack_slice(a_arr, a_slice):
+    if a_slice:
+        a_from, a_to = a_slice
+    else:
+        a_from, a_to = (0, len(a_arr))
+    return a_from, a_to
 
 
 def karatsuba_mult(value1, from1, to1, value2, from2, to2):

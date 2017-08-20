@@ -29,3 +29,13 @@ class TestMult(TestCase):
         out = array_to_int(simple_mult_as_arrays(a, b, result, result_offset=1))
 
         assert out == 40, out
+
+    def test_result_input_offset(self):
+        a = numpy.array([0, 0, 1])
+        b = numpy.array([1, 2, 3])
+
+        result = numpy.zeros(6, dtype=int)
+
+        out = array_to_int(simple_mult_as_arrays(a, b, result, a_slice=(1, 3), b_slice=(1, 2)))
+
+        assert out == 20, out
