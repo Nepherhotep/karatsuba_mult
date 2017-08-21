@@ -6,6 +6,8 @@ from tools import TickProfiler, int_to_array, array_to_int
 
 def mult(a, b, profiler=None):
     assert a < 10 or b < 10
+    assert a < 100
+    assert b < 100
 
     if profiler:
         profiler.tick('mult')
@@ -31,7 +33,7 @@ def inc_value(arr, pos, value, profiler=None):
 def simple_mult(a, b, size=64, profiler=None):
     a_arr, b_arr = int_to_array(a, size), int_to_array(b, size)
     result_arr = numpy.zeros(len(a_arr) + len(b_arr), dtype=int)
-    return array_to_int(simple_mult_as_arrays(a_arr, b_arr, result_arr, profiler))
+    return array_to_int(simple_mult_as_arrays(a_arr, b_arr, result_arr, profiler=profiler))
 
 
 def simple_mult_as_arrays(a_arr, b_arr, result_arr, a_slice=None, b_slice=None, result_offset=0, profiler=None):
@@ -43,9 +45,9 @@ def simple_mult_as_arrays(a_arr, b_arr, result_arr, a_slice=None, b_slice=None, 
             a_item = a_arr[a_pos]
             b_item = b_arr[b_pos]
             pos = result_offset + a_pos + b_pos - a_from - b_from
-            value = mult(a_item, b_item, profiler)
+            value = mult(a_item, b_item, profiler=profiler)
 
-            inc_value(result_arr, pos, value, profiler)
+            inc_value(result_arr, pos, value, profiler=profiler)
     return result_arr
 
 
@@ -69,9 +71,9 @@ def karatsuba_mult(x, y, profiler=None):
         c = int(y / 10 ** m)
         d = int(y % 10 ** m)
 
-        step1 = karatsuba_mult(a, c)
-        step2 = karatsuba_mult(b, d)
-        step3 = karatsuba_mult(a + b, c + d)
+        step1 = karatsuba_mult(a, c, profiler=profiler)
+        step2 = karatsuba_mult(b, d, profiler=profiler)
+        step3 = karatsuba_mult(a + b, c + d, profiler=profiler)
         step4 = step3 - step2 - step1
 
         return int(step1 * 10 ** (2 * m)) + int((step4 * 10 ** m)) + step2
@@ -79,17 +81,18 @@ def karatsuba_mult(x, y, profiler=None):
 
 def main():
 
-    sizes = range(2, 30)
+    sizes = list(range(2, 50))
     totals = []
     for size in sizes:
-        a = int(size * '5')
-        b = int(size * '8')
 
         p = TickProfiler()
 
-        simple_mult(a, b, profiler=p, size=size)
+        a = int('5' * size)
+        b = int('7' * size)
+        karatsuba_mult(a, b, profiler=p)
 
         totals.append(p.get_total())
+
         print('Size {}: {} total ticks'.format(size, p.get_total()))
 
     plt.plot(sizes, totals)
