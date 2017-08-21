@@ -5,8 +5,7 @@ from tools import TickProfiler, int_to_array, array_to_int
 
 
 def mult(a, b, profiler=None):
-    assert a < 10
-    assert b < 10
+    assert a < 10 or b < 10
 
     if profiler:
         profiler.tick('mult')
@@ -58,17 +57,24 @@ def unpack_slice(a_arr, a_slice):
     return a_from, a_to
 
 
-def karatsuba_mult(value1, from1, to1, value2, from2, to2):
-    if from1 - to1 == 2:
-        a = value1[from1]
-        b = value1[to1]
-        c = value2[from1]
-        d = value2[to1]
+def karatsuba_mult(x, y, profiler=None):
+    if x < 10 or y < 10:
+        return mult(x, y, profiler=profiler)
+    else:
+        n = max(len(str(x)), len(str(y)))
+        m = int(n / 2)
 
-        step1 = mult(a, c)
-        step2 = mult(b, d)
-        step3 = (a + b) * (c + d)
+        a = int(x / 10 ** m)
+        b = int(x % 10 ** m)
+        c = int(y / 10 ** m)
+        d = int(y % 10 ** m)
+
+        step1 = karatsuba_mult(a, c)
+        step2 = karatsuba_mult(b, d)
+        step3 = karatsuba_mult(a + b, c + d)
         step4 = step3 - step2 - step1
+
+        return int(step1 * 10 ** (2 * m)) + int((step4 * 10 ** m)) + step2
 
 
 def main():

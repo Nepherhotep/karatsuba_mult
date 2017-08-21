@@ -3,7 +3,7 @@ from unittest import TestCase
 import numpy
 
 from tools import array_to_int
-from week1_introduction import simple_mult, simple_mult_as_arrays
+from week1_introduction import simple_mult, simple_mult_as_arrays, karatsuba_mult
 
 
 class TestMult(TestCase):
@@ -14,6 +14,18 @@ class TestMult(TestCase):
         assert result == a * b, result
 
     def test_simple_mult2(self):
+        a, b = 77771232346123, 832409801237
+
+        result = simple_mult(a, b)
+        assert result == a * b, result
+
+    def test_karatsuba_mult(self):
+        a, b = 1234, 3575
+
+        result = karatsuba_mult(a, b)
+        assert result == a * b, (result, a * b)
+
+    def test_karatsuba_mult2(self):
         a, b = 77771232346123, 832409801237
 
         result = simple_mult(a, b)
