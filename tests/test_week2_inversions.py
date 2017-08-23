@@ -20,3 +20,20 @@ class TestMult(TestCase):
         self.assertEqual(inv, 1)
         self.assertEqual(result, [1, 2, 3, 4])
 
+    def test_calc_inversions3(self):
+        a = [1, 2, 4, 3, 5]
+
+        inv, result = calc_inversions(a)
+
+        self.assertEqual(inv, 1)
+        self.assertEqual(result, [1, 2, 3, 4, 5])
+
+    def test_calc_inversions4(self):
+        a = [1, 3, 2]
+
+        inv, result = calc_inversions(a)
+
+        self.assertEqual(inv, 1)
+        self.assertEqual(result, [1, 2, 3])
+
+

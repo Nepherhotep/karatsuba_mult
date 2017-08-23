@@ -9,32 +9,30 @@ def load_input_array():
 
 
 def merge_arrays(a, b):
-    n = len(a) + len(b)
-    m = int(n / 2)
-    result = [0] * n
+    result = []
 
     i = 0
     j = 0
     inversions = 0
 
-    while i < m and j < m:
+    while i < len(a) and j < len(b):
         a_item = a[i]
         b_item = b[j]
 
         if a_item <= b_item:
-            result[i + j] = a_item
+            result.append(a_item)
             i += 1
         else:
-            result[i + j] = b_item
+            result.append(b_item)
             j += 1
-            inversions += m - i
+            inversions += len(a) - i
 
-    for i in range(i, m):
-        result[i + j] = a[i]
+    for i in range(i, len(a)):
+        result.append(a[i])
 
-    for j in range(j, m):
-        result[i + j] = b[j]
-        inversions += m - i
+    for j in range(j, len(b)):
+        result.append(b[j])
+        inversions += len(a) - i
 
     return inversions, result
 
@@ -55,4 +53,8 @@ def calc_inversions(arr):
 
 
 if __name__ == '__main__':
-    main()
+    a = load_input_array()
+    inv, r = calc_inversions(a)
+    print(inv)
+    print(len(r))
+
