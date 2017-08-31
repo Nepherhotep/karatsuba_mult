@@ -45,5 +45,3 @@ class TestMult(TestCase):
         quicksort(a, get_pivot_function=median_element_pivot)
 
         self.assertEqual(a, list(range(10)))
-
-
