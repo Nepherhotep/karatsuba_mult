@@ -61,8 +61,8 @@ def quicksort(a, from_index=0, to_index=None, get_pivot_function=first_element_p
 def swap(a, index1, index2):
     if index1 > index2:
         index1, index2 = index2, index1
-    print('swap: {}, {}[{}] -> {}[{}]'.format(a, a[index1], index1, a[index2], index2))
-    print('swap: ' + '   ' * index1 + ' ^ ' + (index2 - index1 - 1) * '   ' + ' ^ ')
+    # print('swap: {}, {}[{}] -> {}[{}]'.format(a, a[index1], index1, a[index2], index2))
+    # print('swap: ' + '   ' * index1 + ' ^ ' + (index2 - index1 - 1) * '   ' + ' ^ ')
     a[index1], a[index2] = a[index2], a[index1]
 
 
