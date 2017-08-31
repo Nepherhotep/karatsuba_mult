@@ -33,13 +33,14 @@ def quicksort(a, from_index=0, to_index=None, get_pivot_function=first_element_p
         to_index = len(a)
 
     pivot_index, pivot = get_pivot_function(a, from_index, to_index)
+    swap(a, from_index, pivot_index)
+    pivot_index = from_index
+
     last_part = from_index
     for last_seen in range(from_index, to_index):
         element = a[last_seen]
-        if element < pivot:
+        if element <= pivot:
             swap(a, last_part, last_seen)
-            last_part += 1
-        elif element == pivot:
             last_part += 1
 
     swap(a, last_part - 1, pivot_index)

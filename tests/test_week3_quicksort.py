@@ -26,9 +26,24 @@ class TestMult(TestCase):
         self.assertEqual(a, list(range(10)))
 
     def test_quicksort4(self):
+        a = [7, 3, 2, 8, 6, 5, 4, 1, 9, 0]
+
+        quicksort(a, get_pivot_function=final_element_pivot)
+
+        self.assertEqual(a, list(range(10)))
+
+    def test_quicksort5(self):
         a = [9, 5, 4, 7, 0, 2, 8, 6, 3, 1]
 
         quicksort(a, get_pivot_function=median_element_pivot)
 
         self.assertEqual(a, list(range(10)))
+
+    def test_quicksort6(self):
+        a = [7, 3, 2, 8, 6, 5, 4, 1, 9, 0]
+
+        quicksort(a, get_pivot_function=median_element_pivot)
+
+        self.assertEqual(a, list(range(10)))
+
 
