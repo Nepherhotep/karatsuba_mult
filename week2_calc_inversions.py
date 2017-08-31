@@ -1,11 +1,4 @@
-
-
-def load_input_array():
-    results = []
-    with open('fixtures/inversions.txt') as f:
-        for line in f.readlines():
-            results.append(int(line.strip()))
-    return results
+from tools import load_input_array
 
 
 def merge_arrays(a, b):
@@ -53,7 +46,7 @@ def calc_inversions(arr):
 
 
 if __name__ == '__main__':
-    a = load_input_array()
+    a = load_input_array('fixtures/inversions.txt')
     inv, r = calc_inversions(a)
     print(inv)
     print(len(r))

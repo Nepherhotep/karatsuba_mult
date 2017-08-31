@@ -38,3 +38,11 @@ def array_to_int(value):
     result = result[::-1]
     result = result.lstrip('0')
     return int(result)
+
+
+def load_input_array(fixture):
+    results = []
+    with open(fixture) as f:
+        for line in f.readlines():
+            results.append(int(line.strip()))
+    return results
