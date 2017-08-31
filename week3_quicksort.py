@@ -33,25 +33,28 @@ def quicksort(a, from_index=0, to_index=None, get_pivot_function=first_element_p
         to_index = len(a)
 
     pivot_index, pivot = get_pivot_function(a, from_index, to_index)
-    i = from_index
-    for j in range(from_index, to_index):
-        element = a[j]
-        if element > pivot:
-            swap(a, i, j)
-        else:
-            i += 1
+    last_part = from_index
+    for last_seen in range(from_index, to_index):
+        element = a[last_seen]
+        if element < pivot:
+            if not last_seen == last_part:
+                swap(a, last_part, last_seen)
+            last_part += 1
+        elif element == pivot:
+            last_part += 1
 
+    swap(a, last_part - 1, pivot_index)
 
-    swap(a, i, pivot_index)
+    if last_part - from_index > 1:
+        quicksort(a, from_index, last_part - 1)
 
-    if i - from_index > 1:
-        quicksort(a, from_index, i - 1)
-
-    if to_index - i > 1:
-        quicksort(a, i + 1, to_index)
+    if to_index - last_part > 1:
+        quicksort(a, last_part, to_index)
 
 
 def swap(a, index1, index2):
+    if index1 > index2:
+        index1, index2 = index2, index1
     a[index1], a[index2] = a[index2], a[index1]
 
 
