@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from calc_inversions import calc_inversions
+from week2_calc_inversions import calc_inversions
 
 
 class TestMult(TestCase):
