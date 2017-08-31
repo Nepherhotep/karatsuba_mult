@@ -6,7 +6,7 @@ def first_element_pivot(a, from_index, to_index):
 
 
 def final_element_pivot(a, from_index, to_index):
-    return to_index, a[to_index - 1]
+    return to_index - 1, a[to_index - 1]
 
 
 def median_element_pivot(a, from_index, to_index):
@@ -37,11 +37,11 @@ def quicksort(a, from_index=0, to_index=None, get_pivot_function=first_element_p
     for last_seen in range(from_index, to_index):
         element = a[last_seen]
         if element < pivot:
-            if not last_seen == last_part:
-                swap(a, last_part, last_seen)
+            swap(a, last_part, last_seen)
             last_part += 1
         elif element == pivot:
             last_part += 1
+
     swap(a, last_part - 1, pivot_index)
 
     if last_part - from_index > 1:
