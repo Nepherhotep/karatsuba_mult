@@ -10,3 +10,10 @@ class TestMult(TestCase):
         quicksort(a)
 
         self.assertEqual(a, list(range(10)))
+
+    def test_quicksort2(self):
+        a = [9, 5, 4, 7, 0, 2, 8, 6, 3, 1]
+
+        quicksort(a)
+
+        self.assertEqual(a, list(range(10)))
