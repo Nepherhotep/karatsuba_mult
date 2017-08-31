@@ -29,10 +29,13 @@ def median_element_pivot(a, from_index, to_index):
 
 
 def quicksort(a, from_index=0, to_index=None, get_pivot_function=first_element_pivot):
+    # automatically select the whole array, if nothing passed
     if to_index is None:
         to_index = len(a)
 
     pivot_index, pivot = get_pivot_function(a, from_index, to_index)
+
+    # swap pivot to the first position to avoid confusion later
     swap(a, from_index, pivot_index)
     pivot_index = from_index
 
@@ -43,11 +46,14 @@ def quicksort(a, from_index=0, to_index=None, get_pivot_function=first_element_p
             swap(a, last_part, last_seen)
             last_part += 1
 
+    # swap pivot to the last partitioned position
     swap(a, last_part - 1, pivot_index)
 
+    # perform quick sort of the left part
     if last_part - from_index > 1:
         quicksort(a, from_index, last_part - 1)
 
+    # perform quick sort of the right part
     if to_index - last_part > 1:
         quicksort(a, last_part, to_index)
 
