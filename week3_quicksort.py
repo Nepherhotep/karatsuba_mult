@@ -12,20 +12,20 @@ def final_element_pivot(a, from_index, to_index):
 def median_element_pivot(a, from_index, to_index):
     item1 = a[from_index]
 
-    middle = (from_index + to_index) / 2
+    middle = int((from_index + to_index) / 2)
     item2 = a[middle]
 
-    item3 = a[to_index]
+    item3 = a[to_index - 1]
 
     elements = [item1, item2, item3]
     elements.sort()
 
     if elements[1] == item1:
-        return from_index, a[from_index]
+        return from_index, item1
     elif elements[1] == item2:
-        return middle, a[middle]
+        return middle, item2
     else:
-        return to_index, a[to_index]
+        return to_index - 1, item3
 
 
 def quicksort(a, from_index=0, to_index=None, get_pivot_function=first_element_pivot):
