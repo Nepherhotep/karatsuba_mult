@@ -3,7 +3,7 @@ from unittest import TestCase
 from week2_calc_inversions import calc_inversions
 
 
-class TestMult(TestCase):
+class TestInversions(TestCase):
     def test_calc_inversions(self):
         a = [1, 2, 7, 4, 5, 6, 3, 8]
 
