@@ -1,6 +1,14 @@
 from tools import load_input_array
 
 
+class Counter:
+    def __init__(self):
+        self.counter = 0
+
+    def add(self, m):
+        self.counter += m
+
+
 def first_element_pivot(a, from_index, to_index):
     return from_index, a[from_index]
 
@@ -12,7 +20,7 @@ def final_element_pivot(a, from_index, to_index):
 def median_element_pivot(a, from_index, to_index):
     item1 = a[from_index]
 
-    middle = int((from_index + to_index) / 2)
+    middle = int((from_index + to_index - 1) / 2)
     item2 = a[middle]
 
     item3 = a[to_index - 1]
@@ -28,12 +36,17 @@ def median_element_pivot(a, from_index, to_index):
         return to_index - 1, item3
 
 
-def quicksort(a, from_index=0, to_index=None, get_pivot_function=first_element_pivot):
+def quicksort(a, from_index=0, to_index=None, get_pivot_function=first_element_pivot, counter=None):
     # automatically select the whole array, if nothing passed
     if to_index is None:
         to_index = len(a)
 
+    if counter:
+        counter.add(to_index - from_index)
+
     pivot_index, pivot = get_pivot_function(a, from_index, to_index)
+    # print('{}[{}:{}], {}[{}]'.format(a[from_index:to_index], from_index, to_index,
+    #                                  a[pivot_index], pivot_index))
 
     # swap pivot to the first position to avoid confusion later
     swap(a, from_index, pivot_index)
@@ -50,12 +63,12 @@ def quicksort(a, from_index=0, to_index=None, get_pivot_function=first_element_p
     swap(a, last_part - 1, pivot_index)
 
     # perform quick sort of the left part
-    if last_part - from_index > 1:
-        quicksort(a, from_index, last_part - 1)
+    if last_part - from_index > 2:
+        quicksort(a, from_index, last_part - 1, get_pivot_function, counter)
 
     # perform quick sort of the right part
     if to_index - last_part > 1:
-        quicksort(a, last_part, to_index)
+        quicksort(a, last_part, to_index, get_pivot_function, counter)
 
 
 def swap(a, index1, index2):
@@ -68,8 +81,15 @@ def swap(a, index1, index2):
 
 if __name__ == '__main__':
     input_array = load_input_array('fixtures/quicksort.txt')
-    quicksort(input_array)
-    for item in input_array:
-        print(item)
 
-    
+    counter = Counter()
+    quicksort(input_array[:], counter=counter)
+    print('first element pivot complexity', counter.counter)
+
+    counter = Counter()
+    quicksort(input_array[:], get_pivot_function=final_element_pivot, counter=counter)
+    print('last element pivot complexity', counter.counter)
+
+    counter = Counter()
+    quicksort(input_array[:], get_pivot_function=median_element_pivot, counter=counter)
+    print('median element pivot complexity', counter.counter)
