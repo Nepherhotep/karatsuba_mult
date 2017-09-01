@@ -68,5 +68,8 @@ def swap(a, index1, index2):
 
 if __name__ == '__main__':
     input_array = load_input_array('fixtures/quicksort.txt')
+    quicksort(input_array)
     for item in input_array:
         print(item)
+
+    
