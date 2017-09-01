@@ -45,8 +45,8 @@ def quicksort(a, from_index=0, to_index=None, get_pivot_function=first_element_p
         counter.add(to_index - from_index)
 
     pivot_index, pivot = get_pivot_function(a, from_index, to_index)
-    # print('{}[{}:{}], {}[{}]'.format(a[from_index:to_index], from_index, to_index,
-    #                                  a[pivot_index], pivot_index))
+    # print('slice [{}:{}], pivot {}[{}], of {}'.format(from_index, to_index, a[pivot_index],
+    #                                                pivot_index, a[from_index:to_index]))
 
     # swap pivot to the first position to avoid confusion later
     swap(a, from_index, pivot_index)
