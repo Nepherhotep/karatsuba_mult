@@ -42,7 +42,7 @@ def quicksort(a, from_index=0, to_index=None, get_pivot_function=first_element_p
         to_index = len(a)
 
     if counter:
-        counter.add(to_index - from_index)
+        counter.add(to_index - from_index - 1)
 
     pivot_index, pivot = get_pivot_function(a, from_index, to_index)
     # print('slice [{}:{}], pivot {}[{}], of {}'.format(from_index, to_index, a[pivot_index],
