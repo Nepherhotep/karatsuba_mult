@@ -1,5 +1,5 @@
+import random
 from pprint import pprint
-
 from copy import deepcopy
 
 
@@ -22,7 +22,7 @@ class Graph:
     def print_stats(self):
         print('Nodes: {}'.format(len(self.graph)))
 
-    def replace_edge(self, a, b):
+    def perform_edge_contraction(self, a, b):
         """
         Remove edge between a and b, thus all the "a" occurence will be replaced by "b".
         """
@@ -47,7 +47,6 @@ class Graph:
         self.graph[node] = [x for x in self.graph[node] if x != value]
 
     def merge_nodes(self, nodes, a, b):
-        print('merge nodes', nodes, a, b)
         for i, value in enumerate(nodes):
             if value == a:
                 nodes[i] = b
@@ -62,10 +61,25 @@ class Graph:
         for nodes in self.graph.values():
             nodes.sort()
 
+    def perform_random_contraction(self):
+        a, b = random.sample(self.graph.keys(), k=2)
+        self.perform_edge_contraction(a, b)
+
     def __len__(self):
         return len(self.graph)
 
 
+def find_min_cut(graph):
+    g = graph.clone()
+    while len(g) > 2:
+        print('perform contraction')
+        g.perform_random_contraction()
+    
+    key = g.graph.keys()[0]
+    return len(g.graph[key])
+
 if __name__ == '__main__':
     graph = load_input_graph('fixtures/karger_min_cut.txt')
     graph.print_stats()
+
+    print(find_min_cut(graph))

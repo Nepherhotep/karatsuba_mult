@@ -25,7 +25,7 @@ class TestGraph(TestCase):
                    3: [2, 4],
                    4: [1, 3]})
 
-        g.replace_edge(2, 3)
+        g.perform_edge_contraction(2, 3)
         g.sort()
 
         expected = {1: [3, 4],
@@ -58,7 +58,7 @@ class TestGraph(TestCase):
                    3: [1, 2, 4],
                    4: [1, 2, 3]})
 
-        g.replace_edge(2, 3)
+        g.perform_edge_contraction(2, 3)
         g.sort()
 
         expected = {1: [3, 3, 4],
@@ -90,7 +90,7 @@ class TestGraph(TestCase):
                    3: [1, 2, 4],
                    4: [1, 2, 3]})
 
-        g.replace_edge(2, 3)
+        g.perform_edge_contraction(2, 3)
         g.sort()
 
         expected = {1: [3, 3, 3, 4],
