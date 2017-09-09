@@ -62,6 +62,9 @@ class Graph:
         for nodes in self.graph.values():
             nodes.sort()
 
+    def __len__(self):
+        return len(self.graph)
+
 
 if __name__ == '__main__':
     graph = load_input_graph('fixtures/karger_min_cut.txt')

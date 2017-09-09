@@ -98,4 +98,12 @@ class TestGraph(TestCase):
                     4: [1, 3, 3]}
 
         self.assertEqual(g.graph, expected)
+
+    def test_graph_len(self):
+        g = Graph({1: [2, 3, 4],
+                   2: [1],
+                   3: [1],
+                   4: [1]})
         
+        self.assertEqual(len(g), 4)
+                  
