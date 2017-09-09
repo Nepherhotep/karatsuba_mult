@@ -24,8 +24,7 @@ class Graph:
 
     def replace_edge(self, a, b):
         """
-        We remove edge between a and b. We remove a and move all the existing relations into b.
-        :return:
+        Remove edge between a and b, thus all the "a" occurence will be replaced by "b".
         """
         assert a in self.graph[b], "Can't pop edge - reference found <{}>---<{}>".format(a, b)
         assert b in self.graph[a], "Can't pop edge - reference found <{}>---<{}>".format(b, a)
@@ -48,6 +47,7 @@ class Graph:
         self.graph[node] = [x for x in self.graph[node] if x != value]
 
     def merge_nodes(self, nodes, a, b):
+        print('merge nodes', nodes, a, b)
         for i, value in enumerate(nodes):
             if value == a:
                 nodes[i] = b
