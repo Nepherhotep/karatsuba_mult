@@ -12,12 +12,13 @@ class TestGraph(TestCase):
          |       |
         <4> --- <3>
 
+
         We want to replace 2 with 3:
 
-           --------+
-        <1> -----+ |
-         |       | |
-        <4> ---- <3>
+           <1>
+          /    \
+        <4> -- <3>
+
         """
         g = Graph({1: [2, 4],
                    2: [1, 3],
@@ -27,8 +28,8 @@ class TestGraph(TestCase):
         g.replace_edge(2, 3)
         g.sort()
 
-        expected = {1: [3, 3, 4],
-                    3: [1, 1, 4],
+        expected = {1: [3, 4],
+                    3: [1, 4],
                     4: [1, 3]}
 
         self.assertEqual(g.graph, expected)

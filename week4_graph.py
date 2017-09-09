@@ -39,7 +39,6 @@ class Graph:
 
         # Add remaining references from a into b
         self.graph[b].extend(refs)
-        self.graph[b].extend(refs)
 
         # Replace all the existing "a" references by "b"
         for nodes in self.graph.values():
@@ -49,15 +48,9 @@ class Graph:
         self.graph[node] = [x for x in self.graph[node] if x != value]
 
     def merge_nodes(self, nodes, a, b):
-        double_edge = 0
         for i, value in enumerate(nodes):
             if value == a:
                 nodes[i] = b
-                double_edge += 1
-
-        # double edge
-        for i in range(double_edge):
-            nodes.append(b)
 
     def clone(self):
         return Graph(deepcopy(self.graph))
