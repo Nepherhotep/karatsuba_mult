@@ -1,3 +1,4 @@
+import math
 import random
 from pprint import pprint
 from copy import deepcopy
@@ -22,12 +23,21 @@ class Graph:
     def print_stats(self):
         print('Nodes: {}'.format(len(self.graph)))
 
+    def validate(self):
+        """
+        Check graph consistency
+        """
+        for node, refs in self.graph.items():
+            for ref in refs:
+                assert ref in self.graph
+                assert node in self.graph[ref]
+
     def perform_edge_contraction(self, a, b):
         """
         Remove edge between a and b, thus all the "a" occurence will be replaced by "b".
         """
-        assert a in self.graph[b], "Can't pop edge - reference found <{}>---<{}>".format(a, b)
-        assert b in self.graph[a], "Can't pop edge - reference found <{}>---<{}>".format(b, a)
+        assert a in self.graph[b], "Can't pop edge - reference not found <{}>---<{}>".format(a, b)
+        assert b in self.graph[a], "Can't pop edge - reference not found <{}>---<{}>".format(b, a)
 
         # Remove edge <a>---<b>
         self.remove_from_node(a, b)
@@ -62,7 +72,8 @@ class Graph:
             nodes.sort()
 
     def perform_random_contraction(self):
-        a, b = random.sample(self.graph.keys(), k=2)
+        a = random.choice(list(self.graph.keys()))
+        b = random.choice(self.graph[a])
         self.perform_edge_contraction(a, b)
 
     def __len__(self):
@@ -71,15 +82,23 @@ class Graph:
 
 def find_min_cut(graph):
     g = graph.clone()
+
     while len(g) > 2:
-        print('perform contraction')
         g.perform_random_contraction()
     
-    key = g.graph.keys()[0]
+    key = list(g.graph.keys())[0]
     return len(g.graph[key])
 
 if __name__ == '__main__':
     graph = load_input_graph('fixtures/karger_min_cut.txt')
     graph.print_stats()
-
-    print(find_min_cut(graph))
+    graph.validate()
+    
+    N = len(graph)
+    probes = int(N * N * math.log(N))
+    
+    min_cut = N * N
+    for i in range(probes):
+        min_cut = min(find_min_cut(graph), min_cut)
+        print('probe: {}, min cut: {}'.format(i + 1, min_cut))
+    print('min cut', min_cut)
