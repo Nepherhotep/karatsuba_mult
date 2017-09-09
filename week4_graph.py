@@ -95,7 +95,7 @@ if __name__ == '__main__':
     graph.validate()
     
     N = len(graph)
-    probes = int(N * N * math.log(N))
+    probes = int(N)
     
     min_cut = N * N
     for i in range(probes):
